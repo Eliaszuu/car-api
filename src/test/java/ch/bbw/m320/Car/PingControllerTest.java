@@ -1,4 +1,4 @@
-package ch.bbw.m320.restintro;
+package ch.bbw.m320.Car;
 
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
