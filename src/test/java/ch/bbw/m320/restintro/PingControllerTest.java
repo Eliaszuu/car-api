@@ -3,6 +3,7 @@ package ch.bbw.m320.restintro;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,6 +25,15 @@ class PingControllerTest implements WithAssertions {
 				.is2xxSuccessful()
 				.expectBody(String.class)
 				.isEqualTo("pong");
+	}
+
+	@ParameterizedTest(strings =
+			{}
+	)
+	void createPony_Happyflow_201(ponyDto) {
+		webClient.post()
+				.uri("/api/ponis")
+				.bodyValue()
 	}
 
 }

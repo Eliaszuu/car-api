@@ -8,35 +8,19 @@ servers:
 
 paths:
   # https://swagger.io/specification/#paths-object
-  /api/ping:
-    # https://swagger.io/specification/#path-item-object
-    get:
-      # https://swagger.io/specification/#operation-object
-      summary: Returns a simple pong to check if the service is alive
-      operationId: ping
-      responses:
-        200:
-          # https://swagger.io/specification/#response-object
-          description: Simply the string `pong`
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: pong
-                # just one constant value (usually an enum contains multiple values)
-                enum:
-                  - pong
-        default:
-          description: A sample error mainly here to give a sample on how to use components
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SampleError'
+
 
 # components contain reusable definitions
 # https://swagger.io/specification/#components-object
 components:
   schemas:
+    ponyDto:
+      description: a pony
+      properties:
+        name:
+          type: string
+        color:
+          type: string
     SampleError:
       description: Sample springboot error
       properties:
