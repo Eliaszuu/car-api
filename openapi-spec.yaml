@@ -1,26 +1,59 @@
 openapi: 3.0.3
 info:
   version: 0.0.1
-  title: REST Intro Sample Application
-  description: A small sample API to grasp the basics of the OpenAPI Specification
+  title: M320 Car Api
+  description: M320 CRUD + OpenAPI, Made by Elias and Lorenz
 servers:
   - url: http://localhost:8080
 
 paths:
-  # https://swagger.io/specification/#paths-object
+  /api/cars:
+    get:
+      summary: returns all cars
+      operationId: cars
+      responses:
+        200:
+          description: Simply the string `pong`
+          content:
+            application/json:
+              schema:
+                type: array
+                #/components/schemas/car
+                example:
+                enum:
+                  - pong
+  /api/cars/{id}:
+    get:
+      summary: returns a car using id
+      operationId: cars
+      responses:
+        200:
+          description: Simply the string `pong`
+          content:
+            application/json:
+              schema:
+                type: object #/components/schemas/car
+                example:
+                  - { "id": "abc123-abc123", "brand": "Volkswagen", "name": "Golf", "color": "blue" }
 
 
-# components contain reusable definitions
-# https://swagger.io/specification/#components-object
 components:
   schemas:
-    ponyDto:
-      description: a pony
+    car:
+      description: car
       properties:
+        id:
+          type: string
+          example: abc123-abc123
+        brand:
+          type: string
+          example: Mercedes
         name:
           type: string
+          example: G-Klasse
         color:
           type: string
+          example: blue
     SampleError:
       description: Sample springboot error
       properties:
