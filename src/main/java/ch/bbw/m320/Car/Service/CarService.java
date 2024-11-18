@@ -43,11 +43,12 @@ public class CarService {
                     f.setYear(car.getYear());
                     f.setEngine(car.getEngine());
                     f.setBrand(car.getBrand());
+                    car.setCreateTimestamp(f.getCreateTimestamp());
+                    car.setId(id);
                 });
         return car;
     }
 
-    // Delete a car by ID
     public void deleteCar(UUID id) {
         cars.stream().filter(f -> f.getId().equals(id)).findFirst()
                 .ifPresent(f -> cars.remove(f));
