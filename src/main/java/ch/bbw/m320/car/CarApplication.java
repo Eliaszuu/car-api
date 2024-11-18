@@ -1,4 +1,4 @@
-package ch.bbw.m320.Car;
+package ch.bbw.m320.car;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

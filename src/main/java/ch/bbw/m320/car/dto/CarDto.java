@@ -1,4 +1,4 @@
-package ch.bbw.m320.Car.Dto;
+package ch.bbw.m320.car.dto;
 
 import lombok.Data;
 
@@ -16,5 +16,5 @@ public class CarDto {
     private String color;
     private Year year;
     private String engine;
-    private Integer Ps;
+    private Integer ps;
 }

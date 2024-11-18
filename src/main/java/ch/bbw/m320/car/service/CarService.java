@@ -1,6 +1,6 @@
-package ch.bbw.m320.Car.Service;
+package ch.bbw.m320.car.service;
 
-import ch.bbw.m320.Car.Dto.CarDto;
+import ch.bbw.m320.car.dto.CarDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 

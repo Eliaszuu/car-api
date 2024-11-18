@@ -1,7 +1,7 @@
-package ch.bbw.m320.Car.Controller;
+package ch.bbw.m320.car.controller;
 
-import ch.bbw.m320.Car.Dto.CarDto;
-import ch.bbw.m320.Car.Service.CarService;
+import ch.bbw.m320.car.dto.CarDto;
+import ch.bbw.m320.car.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

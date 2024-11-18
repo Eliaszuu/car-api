@@ -1,8 +1,6 @@
-package ch.bbw.m320.Car.Service;
+package ch.bbw.m320.car.service;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CarServiceTest {
 
