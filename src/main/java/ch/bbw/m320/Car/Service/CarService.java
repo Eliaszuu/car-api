@@ -7,39 +7,46 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CarService {
 
     private List<CarDto> cars = new ArrayList<>();
-    private long currentId = 1;
 
     @GetMapping
     public List<CarDto> getAllCars() {
         return cars;
     }
 
-    public CarDto getCarById(Integer id) {
+    public CarDto getCarById(UUID id) {
         Optional<CarDto> car = cars.stream()
-                .filter(c -> c.Id().equals(id))
+                .filter(c -> c.getId().equals(id))
                 .findFirst();
         return car.orElse(null);
     }
 
     public CarDto addCar(CarDto car) {
-      car.
+        cars.add(car);
+        return car;
     }
 
-    public CarDto editCar(CarDto car) {
-        if (cars.containsKey(car.getId())) {
-            cars.put(car.getId(), car);
-            return car;
-        }
-        return null;
+    public CarDto editCar(CarDto car,UUID id) {
+        cars.stream().filter(f -> f.getId().equals(id)).findFirst()
+                .ifPresent(f -> {
+                    f.setPs(car.getPs());
+                    f.setColor(car.getColor());
+                    f.setModel(car.getModel());
+                    f.setYear(car.getYear());
+                    f.setEngine(car.getEngine());
+                    f.setBrand(car.getBrand());
+                });
+        return car;
     }
 
     // Delete a car by ID
-    public void deleteCar(int carId) {
-        cars.remove(carId);
+    public void deleteCar(UUID id) {
+        cars.stream().filter(f -> f.getId().equals(id)).findFirst()
+                .ifPresent(f -> cars.remove(f));
     }
 }
