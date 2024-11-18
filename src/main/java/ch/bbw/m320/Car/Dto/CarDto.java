@@ -1,26 +1,20 @@
 package ch.bbw.m320.Car.Dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.time.Year;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Data
-@Entity
 public class CarDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    String brand;
-    String model;
-    String color;
-    Year year;
-    String engine;
-    Integer Ps;
+    private ZonedDateTime createTimestamp;
+    private String brand;
+    private String model;
+    private String color;
+    private Year year;
+    private String engine;
+    private Integer Ps;
 }

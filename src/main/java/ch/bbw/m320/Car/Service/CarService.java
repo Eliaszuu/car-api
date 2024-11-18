@@ -4,6 +4,7 @@ import ch.bbw.m320.Car.Dto.CarDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,8 @@ public class CarService {
     }
 
     public CarDto addCar(CarDto car) {
+        car.setCreateTimestamp(ZonedDateTime.now());
+        car.setId(UUID.randomUUID());
         cars.add(car);
         return car;
     }
