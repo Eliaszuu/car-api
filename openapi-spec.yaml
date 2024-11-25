@@ -10,22 +10,28 @@ paths:
   /api/cars:
     get:
       summary: returns all cars
-      operationId: cars
+      operationId: getAllCars
       responses:
         200:
-          description: Simply the string `pong`
+          description: A list of all cars in the system
           content:
             application/json:
               schema:
                 type: array
-                #/components/schemas/car
-                example:
-                enum:
-                  - pong
+                items:
+                  $ref: '#/components/schemas/car'
+
   /api/cars/{id}:
     get:
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the car to retrieve
+          required: true
+          schema:
+            type: string
       summary: returns a car using id
-      operationId: cars
+      operationId: getCarsByID
       responses:
         200:
           description: Simply the string `pong`
