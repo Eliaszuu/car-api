@@ -43,7 +43,8 @@ public class CarController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CarDto> updateCar(@PathVariable UUID id, @RequestBody CarDto carDto) {
-        return ResponseEntity.ok().body(service.editCar(carDto, id));
+        CarDto result = service.editCar(carDto,id);
+        return result == null ? ResponseEntity.notFound().build() : ResponseEntity.ok().body(service.editCar(carDto, id));
     }
 
     @DeleteMapping("/{id}")

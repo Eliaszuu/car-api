@@ -35,20 +35,24 @@ public class CarService {
         return car;
     }
 
-    public CarDto editCar(CarDto car,UUID id) {
-        cars.stream().filter(f -> f.getId().equals(id)).findFirst()
-                .ifPresent(f -> {
-                    f.setPs(car.getPs());
-                    f.setColor(car.getColor());
-                    f.setModel(car.getModel());
-                    f.setYear(car.getYear());
-                    f.setEngine(car.getEngine());
-                    f.setBrand(car.getBrand());
-                    car.setCreateTimestamp(f.getCreateTimestamp());
+    public CarDto editCar(CarDto car, UUID id) {
+        return cars.stream()
+                .filter(f -> f.getId().equals(id))
+                .findFirst()
+                .map(existingCar -> {
+                    existingCar.setPs(car.getPs());
+                    existingCar.setColor(car.getColor());
+                    existingCar.setModel(car.getModel());
+                    existingCar.setYear(car.getYear());
+                    existingCar.setEngine(car.getEngine());
+                    existingCar.setBrand(car.getBrand());
+                    car.setCreateTimestamp(existingCar.getCreateTimestamp());
                     car.setId(id);
-                });
-        return car;
+                    return existingCar; // Return the updated car
+                })
+                .orElse(null); // Return null if no car with the given ID is found
     }
+
 
     public void deleteCar(UUID id) {
         cars.stream().filter(f -> f.getId().equals(id)).findFirst()
