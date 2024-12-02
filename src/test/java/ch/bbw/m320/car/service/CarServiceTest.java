@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Year;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,35 +18,36 @@ class CarServiceTest {
 
     private CarService service;
 
-    private UUID carId;
+    private CarDto testCarDto;
 
     @BeforeEach
     void setUp() {
+        testCarDto = new CarDto();
+        testCarDto.setId(UUID.randomUUID());
+        testCarDto.setCreateTimestamp(ZonedDateTime.now());
+        testCarDto.setBrand("Volkswagen");
+        testCarDto.setModel("Golf");
+        testCarDto.setColor("blue");
+        testCarDto.setYear(Year.of(2020));
+        testCarDto.setEngine("V6");
+        testCarDto.setPs(150);
+
         service = new CarService();
-
-        // Arrange
-        CarDto carDto = new CarDto();
-        carDto.setBrand("Toyota");
-        carDto.setModel("Corolla");
-        carDto.setPs(100);
-        carDto.setColor("black");
-
-        // Act
-        CarDto result = service.addCar(carDto);
-        carId = result.getId();
+        service.addCar(testCarDto);
     }
 
     @Test
     void getAllCars() {
         List<CarDto> result = service.getAllCars();
-
         assertEquals(1, result.size());
     }
 
     @Test
     void getCarById() {
-        CarDto result = service.getCarById(carId);
-        assertEquals("Toyota", result.getBrand());
+        UUID id = testCarDto.getId();
+
+        CarDto result = service.getCarById(id);
+        assertEquals(testCarDto, result);
     }
 
     @Test
@@ -69,10 +72,21 @@ class CarServiceTest {
 
     @Test
     void editCar() {
+        UUID id = testCarDto.getId();
+        testCarDto.setColor("yellow");
+
+        CarDto result = service.editCar(testCarDto, id);
+
+        assertEquals("yellow", result.getColor());
     }
 
     @Test
     void deleteCar() {
+        UUID id = testCarDto.getId();
 
+        service.deleteCar(id);
+
+        List<CarDto> result = service.getAllCars();
+        assertEquals(0, result.size());
     }
 }
