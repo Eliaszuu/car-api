@@ -1,6 +1,7 @@
 package ch.bbw.m320.car.service;
 
 import ch.bbw.m320.car.dto.CarDto;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
+@Component
 public class CarService {
 
     private List<CarDto> cars = new ArrayList<>();
