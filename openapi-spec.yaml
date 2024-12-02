@@ -20,7 +20,24 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/car'
-
+    post:
+      summary: Adds a car to the list
+      requestBody:
+        description: The car to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/car'
+      responses:
+        200:
+          description: returns the added car
+          content:
+            application/json:
+              schema:
+                type: object #/components/schemas/car
+                example:
+                  - { "id": "abc123-abc123", "brand": "Volkswagen", "name": "Golf", "color": "blue" }
   /api/cars/{id}:
     get:
       parameters:
@@ -34,14 +51,41 @@ paths:
       operationId: getCarsByID
       responses:
         200:
-          description: Simply the string `pong`
+          description: The car with the id of the parameter
           content:
             application/json:
               schema:
                 type: object #/components/schemas/car
                 example:
                   - { "id": "abc123-abc123", "brand": "Volkswagen", "name": "Golf", "color": "blue" }
-
+    put:
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the car to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: The updated car
+          content:
+            application/json:
+              schema:
+                type: object #/components/schemas/car
+                example:
+                  - { "id": "abc123-abc123", "brand": "Volkswagen", "name": "Golf", "color": "blue" }
+    delete:
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the car to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: No Content
 
 components:
   schemas:
@@ -50,16 +94,30 @@ components:
       properties:
         id:
           type: string
-          example: abc123-abc123
+          example: a5c68e74-96df-4238-bc44-e96b7864fe8c
+        createTimestamp:
+          type: string
+          example: 2024-12-02T08:11:32.3263381+01:00
+          format: date-time
         brand:
           type: string
           example: Mercedes
-        name:
+        model:
           type: string
           example: G-Klasse
         color:
           type: string
           example: blue
+        year:
+          type: number
+          example: 2015
+          format: year
+        engine:
+          type: string
+          example: Three Cylinder
+        ps:
+          type: string
+          example: 85
     SampleError:
       description: Sample springboot error
       properties:
