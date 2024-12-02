@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   version: 0.0.1
-  title: M320 Car Api
+  title: M320 Car API
   description: M320 CRUD + OpenAPI, Made by Elias and Lorenz
 servers:
   - url: http://localhost:8080
@@ -9,7 +9,7 @@ servers:
 paths:
   /api/cars:
     get:
-      summary: returns all cars
+      summary: Returns all cars
       operationId: getAllCars
       responses:
         200:
@@ -20,6 +20,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/car'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+
     post:
       summary: Adds a car to the list
       requestBody:
@@ -30,16 +37,29 @@ paths:
             schema:
               $ref: '#/components/schemas/car'
       responses:
-        200:
-          description: returns the added car
+        201:
+          description: The added car
           content:
             application/json:
               schema:
-                type: object #/components/schemas/car
-                example:
-                  - { "id": "abc123-abc123", "brand": "Volkswagen", "name": "Golf", "color": "blue" }
+                $ref: '#/components/schemas/car'
+        400:
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+
   /api/cars/{id}:
     get:
+      summary: Returns a car by ID
+      operationId: getCarsByID
       parameters:
         - name: id
           in: path
@@ -47,50 +67,94 @@ paths:
           required: true
           schema:
             type: string
-      summary: returns a car using id
-      operationId: getCarsByID
       responses:
         200:
-          description: The car with the id of the parameter
+          description: The car with the given ID
           content:
             application/json:
               schema:
-                type: object #/components/schemas/car
-                example:
-                  - { "id": "abc123-abc123", "brand": "Volkswagen", "name": "Golf", "color": "blue" }
+                $ref: '#/components/schemas/car'
+        404:
+          description: Car not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+
     put:
+      summary: Updates a car by ID
+      operationId: updateCarByID
       parameters:
         - name: id
           in: path
-          description: The ID of the car to retrieve
+          description: The ID of the car to update
           required: true
           schema:
             type: string
+      requestBody:
+        description: The updated car data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/car'
       responses:
         200:
           description: The updated car
           content:
             application/json:
               schema:
-                type: object #/components/schemas/car
-                example:
-                  - { "id": "abc123-abc123", "brand": "Volkswagen", "name": "Golf", "color": "blue" }
+                $ref: '#/components/schemas/car'
+        400:
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+        404:
+          description: Car not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+
     delete:
+      summary: Deletes a car by ID
+      operationId: deleteCarByID
       parameters:
         - name: id
           in: path
-          description: The ID of the car to retrieve
+          description: The ID of the car to delete
           required: true
           schema:
             type: string
       responses:
-        200:
-          description: No Content
+        204:
+          description: Car successfully deleted
+        404:
+          description: Car not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
 
 components:
   schemas:
     car:
-      description: car
+      type: object
+      description: Car object
       properties:
         id:
           type: string
@@ -109,24 +173,33 @@ components:
           type: string
           example: blue
         year:
-          type: number
+          type: integer
           example: 2015
-          format: year
         engine:
           type: string
           example: Three Cylinder
         ps:
-          type: string
+          type: integer
           example: 85
+      required:
+        - id
+        - brand
+        - model
+        - color
+        - year
+        - engine
+        - ps
+
     SampleError:
-      description: Sample springboot error
+      type: object
+      description: Error object
       properties:
         timestamp:
           type: string
           example: 2022-02-28T14:13:56.466
           format: date-time
         status:
-          type: number
+          type: integer
           example: 404
         error:
           type: string
@@ -134,4 +207,3 @@ components:
         path:
           type: string
           example: /api/nonexistent
-          pattern: "/.+"
