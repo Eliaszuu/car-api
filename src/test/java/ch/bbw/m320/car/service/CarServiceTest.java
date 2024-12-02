@@ -40,6 +40,7 @@ class CarServiceTest {
     void getAllCars() {
         List<CarDto> result = service.getAllCars();
         assertEquals(1, result.size());
+        assertEquals(testCarDto, result.getFirst());
     }
 
     @Test
