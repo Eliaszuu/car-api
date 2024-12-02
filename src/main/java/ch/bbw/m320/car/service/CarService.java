@@ -1,6 +1,7 @@
 package ch.bbw.m320.car.service;
 
 import ch.bbw.m320.car.dto.CarDto;
+import ch.bbw.m320.car.exception.CarNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -22,7 +23,7 @@ public class CarService {
     public CarDto getCarById(UUID id) {
         return cars.stream()
                 .filter(c -> c.getId().equals(id))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("Car with id " + id + " not found"));
+                .findFirst().orElseThrow(() -> new CarNotFoundException("Car with id " + id + " not found"));
     }
 
     public CarDto addCar(CarDto car) {
