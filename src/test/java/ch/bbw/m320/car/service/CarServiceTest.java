@@ -38,7 +38,7 @@ class CarServiceTest {
 
     @Test
     void getAllCars() {
-        List<CarDto> result = service.getAllCars();
+        List<CarDto> result = service.getAllCars(null);
         assertEquals(1, result.size());
         assertEquals(testCarDto, result.getFirst());
     }
@@ -93,7 +93,7 @@ class CarServiceTest {
 
         service.deleteCar(id);
 
-        List<CarDto> result = service.getAllCars();
+        List<CarDto> result = service.getAllCars(null);
         assertEquals(0, result.size());
     }
 }

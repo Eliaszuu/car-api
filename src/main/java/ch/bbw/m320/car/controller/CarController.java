@@ -1,6 +1,7 @@
 package ch.bbw.m320.car.controller;
 
 import ch.bbw.m320.car.dto.CarDto;
+import ch.bbw.m320.car.exception.CarNotFoundException;
 import ch.bbw.m320.car.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,10 @@ public class CarController {
     private final CarService service;
 
     @GetMapping
-    public ResponseEntity<List<CarDto>> getAllCars() {
-        List<CarDto> cars = service.getAllCars();
+    public ResponseEntity<List<CarDto>> getAllCars(@RequestParam(required = false) String brand) {
+        List<CarDto> cars = service.getAllCars(brand);
         if (cars.isEmpty()) {
-            return noContent().build();
+            throw new CarNotFoundException("No Cars found");
         } else {
             return ResponseEntity.ok().body(cars);
         }
@@ -33,7 +34,7 @@ public class CarController {
     @GetMapping("/{id}")
     public ResponseEntity<CarDto> getCarById(@PathVariable UUID id) {
         CarDto carDto = service.getCarById(id);
-        return carDto == null ? noContent().build() : ResponseEntity.status(HttpStatus.CREATED).body(service.getCarById(id));
+        return carDto == null ? noContent().build() : ResponseEntity.status(HttpStatus.OK).body(service.getCarById(id));
     }
 
     @PostMapping

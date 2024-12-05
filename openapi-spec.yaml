@@ -11,6 +11,13 @@ paths:
     get:
       summary: Returns all cars
       operationId: getAllCars
+      parameters:
+        - name: brand
+          in: query
+          description: Optional filter to get cars of a specific brand
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: A list of all cars in the system
@@ -20,6 +27,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/car'
+        404:
+          description: No cars found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleError'
         500:
           description: Internal server error
           content:
