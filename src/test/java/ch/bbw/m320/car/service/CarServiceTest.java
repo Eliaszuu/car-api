@@ -1,6 +1,7 @@
 package ch.bbw.m320.car.service;
 
 import ch.bbw.m320.car.dto.CarDto;
+import ch.bbw.m320.car.exception.CarNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RequiredArgsConstructor
 class CarServiceTest {
@@ -49,6 +49,14 @@ class CarServiceTest {
 
         CarDto result = service.getCarById(id);
         assertEquals(testCarDto, result);
+    }
+    @Test
+    void getCarByIdShouldGetException() {
+        UUID randomId = UUID.randomUUID();
+
+        assertThrows(CarNotFoundException.class, () -> {
+            service.getCarById(randomId);
+        });
     }
 
     @Test
