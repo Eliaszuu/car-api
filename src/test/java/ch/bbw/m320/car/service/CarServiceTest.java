@@ -54,9 +54,7 @@ class CarServiceTest {
     void getCarByIdShouldGetException() {
         UUID randomId = UUID.randomUUID();
 
-        assertThrows(CarNotFoundException.class, () -> {
-            service.getCarById(randomId);
-        });
+        assertThrows(CarNotFoundException.class, () -> service.getCarById(randomId));
     }
 
     @Test
