@@ -3,7 +3,6 @@ package ch.bbw.m320.car.service;
 import ch.bbw.m320.car.dto.CarDto;
 import ch.bbw.m320.car.exception.CarNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.ZonedDateTime;
