@@ -50,6 +50,7 @@ class CarServiceTest {
         CarDto result = service.getCarById(id);
         assertEquals(testCarDto, result);
     }
+
     @Test
     void getCarByIdShouldGetException() {
         UUID randomId = UUID.randomUUID();
