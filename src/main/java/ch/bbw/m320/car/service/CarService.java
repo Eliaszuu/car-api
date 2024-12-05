@@ -48,7 +48,7 @@ public class CarService {
                     car.setId(id);
                     return existingCar;
                 })
-                .orElseThrow(() -> new IllegalArgumentException("Car with id " + id + " not found"));
+                .orElseThrow(() -> new CarNotFoundException("Car with id " + id + " not found"));
     }
 
     public void deleteCar(UUID id) {

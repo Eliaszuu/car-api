@@ -181,14 +181,6 @@ components:
         ps:
           type: integer
           example: 85
-      required:
-        - id
-        - brand
-        - model
-        - color
-        - year
-        - engine
-        - ps
 
     SampleError:
       type: object
