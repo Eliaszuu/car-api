@@ -1,7 +1,12 @@
 package ch.bbw.m320.car.controller;
 
+import java.time.Year;
+import java.time.ZonedDateTime;
+import java.util.UUID;
+
 import ch.bbw.m320.car.dto.CarDto;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,10 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.time.Year;
-import java.time.ZonedDateTime;
-import java.util.UUID;
 
 @AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -170,6 +171,13 @@ class CarControllerTest implements WithAssertions {
                 .expectBody(CarDto.class)
                 .consumeWith(response -> {
                     CarDto updatedCar = response.getResponseBody();
+
+                    // counter-intuitive: but in java we never use the keyword assert!
+                    // instead we use junit asserts:
+                    Assertions.assertNotNull(updatedCar);
+                    // or we go with my favourite AssertJ for which the interface WithAssertions is already on the class
+                    assertThat(updatedCar).isNotNull();
+
                     assert updatedCar != null;
                     assert updatedCar.getBrand().equals(updatedCarDto.getBrand());
                     assert updatedCar.getModel().equals(updatedCarDto.getModel());

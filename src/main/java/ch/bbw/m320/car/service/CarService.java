@@ -1,27 +1,26 @@
 package ch.bbw.m320.car.service;
 
-import ch.bbw.m320.car.dto.CarDto;
-import ch.bbw.m320.car.exception.CarNotFoundException;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-@Component
+import ch.bbw.m320.car.dto.CarDto;
+import ch.bbw.m320.car.exception.CarNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
 public class CarService {
 
     private final List<CarDto> cars = new ArrayList<>();
 
-    @GetMapping
     public List<CarDto> getAllCars(String brand) {
         if (brand != null) {
+            // there is an argument to be made that simple comparisons are done first
+            // aka: having an if(brand==null) instead
             return cars.stream()
                     .filter(car -> car.getBrand().equalsIgnoreCase(brand))
-                    .collect(Collectors.toList());
+                    .toList();
         }
         return cars;
     }
@@ -63,6 +62,7 @@ public class CarService {
 
 
     public void deleteCar(UUID id) {
+        // alternatively cars.deleteIf(...)
         cars.stream().filter(f -> f.getId().equals(id)).findFirst()
                 .ifPresent(cars::remove);
     }
